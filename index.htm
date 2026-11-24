@@ -1,0 +1,245 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>JS Digital Clock</title>
+
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        background: linear-gradient(135deg, #141e30, #243b55);
+        color: white;
+        font-family: Arial, Helvetica, sans-serif;
+      }
+
+      .clock-container {
+        text-align: center;
+        padding: 45px 60px;
+        border: 1px solid rgba(173, 255, 47, 0.4);
+        border-radius: 20px;
+        background: rgba(255, 255, 255, 0.08);
+        backdrop-filter: blur(15px);
+        box-shadow: 0 0 30px rgba(173, 255, 47, 0.15);
+      }
+
+      .heading {
+        font-size: 20px;
+        letter-spacing: 4px;
+        color: #c5c5c5;
+        margin-bottom: 25px;
+      }
+
+      .clock {
+        font-size: 65px;
+        font-weight: bold;
+        color: greenyellow;
+        text-shadow: 0 0 15px rgba(173, 255, 47, 0.6);
+        letter-spacing: 4px;
+      }
+
+      .date {
+        margin-top: 20px;
+        font-size: 17px;
+        color: #c5c5c5;
+        letter-spacing: 2px;
+      }
+
+      .sound-btn {
+        margin-top: 30px;
+        padding: 10px 25px;
+        border: 1px solid greenyellow;
+        border-radius: 25px;
+        background: transparent;
+        color: greenyellow;
+        font-size: 15px;
+        cursor: pointer;
+        transition: 0.3s;
+      }
+
+      .sound-btn:hover {
+        background: greenyellow;
+        color: #141e30;
+        box-shadow: 0 0 15px greenyellow;
+      }
+
+      @media (max-width: 500px) {
+        .clock-container {
+          padding: 35px 20px;
+          width: 90%;
+        }
+
+        .clock {
+          font-size: 38px;
+          letter-spacing: 2px;
+        }
+
+        .heading {
+          font-size: 16px;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="clock-container">
+      <h2 class="heading">DIGITAL CLOCK</h2>
+
+      <h1 class="clock">00:00:00</h1>
+
+      <p class="date"></p>
+
+      <button class="sound-btn">Sound: OFF</button>
+    </div>
+
+    <audio src="Ticking-clock.mp3" preload="auto"></audio>
+
+    <script>
+      console.log("We are Building 1st Project");
+
+      const element = document.querySelector(".clock");
+      const dateElement = document.querySelector(".date");
+      const sound = document.querySelector("audio");
+      const soundBtn = document.querySelector(".sound-btn");
+
+      let soundEnabled = false;
+
+      const option = {
+        timeZone: "Asia/Kolkata",
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+        hour12: true,
+      };
+
+      // Sound ON/OFF button
+      soundBtn.addEventListener("click", () => {
+        soundEnabled = !soundEnabled;
+
+        soundBtn.textContent = soundEnabled ? "Sound: ON" : "Sound: OFF";
+
+        if (!soundEnabled) {
+          sound.pause();
+          sound.currentTime = 0;
+        }
+      });
+
+      // Display current time immediately
+      const currentTime = new Date();
+
+      element.textContent = currentTime.toLocaleTimeString("en-US", option);
+
+      dateElement.textContent = currentTime.toLocaleDateString("en-IN", {
+        timeZone: "Asia/Kolkata",
+        weekday: "long",
+        day: "numeric",
+        month: "long",
+        year: "numeric",
+      });
+
+      setInterval(() => {
+        const Time = new Date();
+
+        // Update clock
+        element.textContent = Time.toLocaleTimeString("en-US", option);
+
+        // Update date
+        dateElement.textContent = Time.toLocaleDateString("en-IN", {
+          timeZone: "Asia/Kolkata",
+          weekday: "long",
+          day: "numeric",
+          month: "long",
+          year: "numeric",
+        });
+
+        // Play ticking sound
+        if (soundEnabled) {
+          sound.currentTime = 0;
+
+          sound.play().catch((err) => {
+            console.log("Audio playback failed:", err);
+          });
+        }
+      }, 1000);
+    </script>
+  </body>
+</html>
+
+
+
+
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JS Clock Project</title>
+    <style>
+        body{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #333539;
+            color: white;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        body::-webkit-scrollbar{
+            display: none;
+        }
+        .clock-container{
+            text-align: center;
+            font-size: 45px;
+            border: 5px solid greenyellow;
+            padding: 25px;
+            border-radius: 5px;
+            background-color: rgba(255,255,255,.5);
+        }
+    </style>
+</head>
+<body>
+    <div class="clock-container">
+        <h1 class="clock">00:00:00</h1>
+    </div>
+
+    <audio src="Ticking-clock.mp3" preload="auto"></audio>
+
+    <script>
+        console.log("We are Building 1st Project");
+
+
+        setInterval(() => {
+        const element = document.querySelector('.clock');
+
+        const sound = document.querySelector('audio');
+
+        sound.play
+
+        // element.textContent = 'Bhavya';
+        
+        let Time = new Date();
+
+        const option = {
+            timeZone : 'Aisa/Kolkata',
+            hours : '2 digits',
+            minutes : '2 digits',
+            seconds: '2 digits',
+        }
+        
+        element.textContent = Time.toLocaleTimeString('EN-US',Option)            
+        }, 1000);
+
+    </script>
+</body>
+</html> -->
